@@ -30,6 +30,6 @@
     url: http://localhost
     return_content: yes
   register: nginx_res
-  until: nginx_res.status == 200 and nginx_res.content == nginx_message
+  until: nginx_res.status == 200
   retries: 5
   delay: 5
