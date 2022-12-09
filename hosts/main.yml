@@ -1,0 +1,22 @@
+all:
+  children:
+    lab_3:
+      hosts:
+        host-1:
+          ansible_host: ec2-52-215-36-171.eu-west-1.compute.amazonaws.com
+        host-2:
+          ansible_host: ec2-63-35-199-238.eu-west-1.compute.amazonaws.com
+      vars:
+        ansible_user: ubuntu
+        ansible_ssh_private_key_file: "~/.ssh/ansible_id_rsa"
+        ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+        ansible_python_interpreter: /usr/bin/python3
+    lab_4:
+      hosts:
+        host-1:
+          ansible_host: ec2-54-247-55-86.eu-west-1.compute.amazonaws.com
+      vars:
+        ansible_user: ubuntu
+        ansible_ssh_private_key_file: "~/.ssh/ansible_id_rsa"
+        ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+        ansible_python_interpreter: /usr/bin/python3

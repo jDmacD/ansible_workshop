@@ -1,0 +1,45 @@
+- hosts: lab_4
+  become: yes
+  gather_facts: yes
+  vars:
+    nginx_message: go suck on a lemon
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+  tasks:
+
+  - name: install nginx
+    apt:
+      name: nginx
+      state: latest
+      update_cache: yes
+    notify: restart nginx
+
+  - name: add nginx conf
+    copy:
+      content: |
+        events{}
+        http{
+          server{
+            location / {
+              return 200 "{{ nginx_message }}";
+            }
+          }
+        }     
+      dest: /etc/nginx/nginx.conf
+    notify: restart nginx
+
+  - name: Flush handlers
+    meta: flush_handlers
+
+  - name: wait for nginx to be running
+    uri:
+      url: http://localhost
+      return_content: yes
+    register: nginx_res
+    until: nginx_res.status == 200 and nginx_res.content == nginx_message
+    retries: 5
+    delay: 5
+  

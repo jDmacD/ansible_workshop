@@ -1,0 +1,14 @@
+- hosts: lab_3
+  tasks:
+  - name: do ping
+    tags:
+      - ping
+      - never
+    block:
+      - name: "Ping {{ inventory_hostname }}"
+        ping:
+        register: ping_info
+
+      - name: "Show ping_info in console"
+        debug:
+          msg: "{{ ping_info }}"
