@@ -21,3 +21,15 @@
     src: nginx.conf
     dest: /etc/nginx/nginx.conf
   notify: 'reload nginx'
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- name: wait for nginx to be running
+  uri:
+    url: http://localhost
+    return_content: yes
+  register: nginx_res
+  until: nginx_res.status == 200 and nginx_res.content == nginx_message
+  retries: 5
+  delay: 5
