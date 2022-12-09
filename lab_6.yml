@@ -1,4 +1,11 @@
 - hosts: all
+  become: yes
   tasks:
     - debug:
         msg: "helllllllloooooo!"
+
+    - name: install stuff
+      apt:
+        name:
+          - screen
+          - jq
